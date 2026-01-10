@@ -978,22 +978,22 @@
                         </svg>
                     </div>
                     <div class="section-content">
-                        <label class="checkbox-item" onclick="toggleCheckbox(this)">
+                        <div class="checkbox-item" onclick="toggleCheckbox(event, this)">
                             <input type="checkbox" name="wrapup_walked">
                             <span>Walked customer through findings</span>
-                        </label>
-                        <label class="checkbox-item" onclick="toggleCheckbox(this)">
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(event, this)">
                             <input type="checkbox" name="wrapup_explained">
                             <span>Explained next steps</span>
-                        </label>
-                        <label class="checkbox-item" onclick="toggleCheckbox(this)">
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(event, this)">
                             <input type="checkbox" name="wrapup_timeline">
                             <span>Gave quote timeline</span>
-                        </label>
-                        <label class="checkbox-item" onclick="toggleCheckbox(this)">
+                        </div>
+                        <div class="checkbox-item" onclick="toggleCheckbox(event, this)">
                             <input type="checkbox" name="wrapup_thanked">
                             <span>Thanked customer</span>
-                        </label>
+                        </div>
                     </div>
                 </div>
 
@@ -1103,7 +1103,8 @@
         }
 
         // Checkbox toggle
-        function toggleCheckbox(label) {
+        function toggleCheckbox(event, label) {
+            event.preventDefault();
             const checkbox = label.querySelector('input');
             checkbox.checked = !checkbox.checked;
             label.classList.toggle('checked', checkbox.checked);
@@ -1609,7 +1610,18 @@
                         <h2>What We Found</h2>
                         <p><strong>${roofTypeLabels[data.roof.type] || data.roof.type || 'Roof'}</strong>, approximately <strong>${data.roof.age || 'unknown'} years old</strong></p>
                         <p>Overall condition: <strong>${capitalize(data.roof.condition) || 'Not assessed'}</strong></p>
-                        ${data.findings.diagnosis ? `<p style="margin-top: 0.5rem;">${data.findings.diagnosis}</p>` : ''}
+                        ${data.findings.problemAreas ? `
+                        <div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 6px; border-left: 4px solid var(--lava-red);">
+                            <strong style="display: block; margin-bottom: 0.5rem;">Problem Areas Identified:</strong>
+                            <p style="margin: 0; white-space: pre-line;">${data.findings.problemAreas}</p>
+                        </div>
+                        ` : ''}
+                        ${data.findings.diagnosis ? `
+                        <div style="margin-top: 1rem;">
+                            <strong style="display: block; margin-bottom: 0.5rem;">Diagnosis:</strong>
+                            <p style="margin: 0;">${data.findings.diagnosis}</p>
+                        </div>
+                        ` : ''}
                     </div>
 
                     ${data.recommendation.type ? `
