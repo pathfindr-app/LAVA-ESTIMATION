@@ -485,40 +485,30 @@
         }
 
         .recap-header {
-            background: linear-gradient(135deg, var(--lava-dark) 0%, #2a2a2a 100%);
-            color: white;
-            padding: 2.5rem 2rem;
+            background: white;
+            padding: 2rem 1.5rem;
             text-align: center;
-            position: relative;
-        }
-
-        .recap-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--lava-orange) 0%, var(--lava-red) 50%, var(--lava-teal) 100%);
+            border-bottom: 3px solid var(--lava-orange);
         }
 
         .recap-header .logo-img {
-            height: 70px;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            height: 80px;
+            margin-bottom: 1.25rem;
         }
 
         .recap-header h1 {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.25rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--lava-dark);
+            margin-bottom: 0.5rem;
         }
 
         .recap-header .license {
-            font-size: 0.75rem;
-            opacity: 0.7;
+            font-size: 0.8rem;
+            color: #666;
             letter-spacing: 0.5px;
         }
 
