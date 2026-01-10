@@ -36,13 +36,17 @@
 
         /* Header */
         .header {
-            background: var(--lava-dark);
-            color: white;
-            padding: 1rem;
+            background: white;
+            color: var(--lava-dark);
+            padding: 0.75rem 1rem;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            border-bottom: 3px solid transparent;
+            background-image: linear-gradient(white, white), linear-gradient(90deg, var(--lava-orange) 0%, var(--lava-orange) 33%, #e07a5f 33%, #e07a5f 66%, var(--lava-teal) 66%, var(--lava-teal) 100%);
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
         }
 
         .header-content {
@@ -61,7 +65,7 @@
         }
 
         .logo span {
-            color: white;
+            color: var(--lava-dark);
         }
 
         .header-nav {
@@ -71,19 +75,26 @@
 
         .nav-btn {
             background: transparent;
-            border: 1px solid #555;
-            color: white;
+            border: 1.5px solid #ddd;
+            color: var(--lava-dark);
             padding: 0.5rem 1rem;
-            border-radius: 4px;
+            border-radius: 6px;
             font-family: inherit;
             font-size: 0.85rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--lava-red);
-            border-color: var(--lava-red);
+        .nav-btn:hover {
+            border-color: var(--lava-orange);
+            color: var(--lava-orange);
+        }
+
+        .nav-btn.active {
+            background: var(--lava-orange);
+            border-color: var(--lava-orange);
+            color: white;
         }
 
         /* Main Container */
@@ -488,7 +499,10 @@
             background: white;
             padding: 2rem 1.5rem;
             text-align: center;
-            border-bottom: 3px solid var(--lava-orange);
+            border-bottom: 4px solid transparent;
+            background-image: linear-gradient(white, white), linear-gradient(90deg, var(--lava-orange) 0%, var(--lava-orange) 33%, #e07a5f 33%, #e07a5f 66%, var(--lava-teal) 66%, var(--lava-teal) 100%);
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
         }
 
         .recap-header .logo-img {
