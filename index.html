@@ -34,6 +34,107 @@
             min-height: 100vh;
         }
 
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--lava-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-screen.hidden {
+            display: none;
+        }
+
+        .login-box {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            width: 90%;
+            max-width: 340px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-bottom: 4px solid transparent;
+            background-image: linear-gradient(white, white), linear-gradient(90deg, var(--lava-orange) 0%, var(--lava-orange) 33%, #e07a5f 33%, #e07a5f 66%, var(--lava-teal) 66%, var(--lava-teal) 100%);
+            background-origin: padding-box, border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .login-box img {
+            height: 70px;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-box h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--lava-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .login-box input[type="password"]:focus {
+            outline: none;
+            border-color: var(--lava-orange);
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--lava-orange);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .login-box button:hover {
+            background: #d14e22;
+        }
+
+        .login-error {
+            color: var(--danger);
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        /* Hide app when not logged in */
+        .app-wrapper {
+            display: none;
+        }
+
+        .app-wrapper.visible {
+            display: block;
+        }
+
         /* Header */
         .header {
             background: white;
@@ -769,6 +870,21 @@
     </style>
 </head>
 <body>
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <img src="logo.png" alt="LAVA Roofing Hawaii">
+            <h2>Inspection Tool Login</h2>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" id="loginPassword" placeholder="Enter password" autocomplete="off">
+                <button type="submit">Sign In</button>
+            </form>
+            <p class="login-error" id="loginError">Incorrect password</p>
+        </div>
+    </div>
+
+    <!-- Main App (hidden until login) -->
+    <div class="app-wrapper" id="appWrapper">
     <header class="header">
         <div class="header-content">
             <div class="logo"><img src="logo.png" alt="LAVA Roofing" style="height: 40px;"></div>
@@ -1155,8 +1271,38 @@
 
     <!-- Toast -->
     <div class="toast" id="toast"></div>
+    </div><!-- End app-wrapper -->
 
     <script>
+        // Login handling
+        const CORRECT_PASSWORD = 'lavaroofing';
+
+        function checkAuth() {
+            if (sessionStorage.getItem('lava_authenticated') === 'true') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('appWrapper').classList.add('visible');
+                return true;
+            }
+            return false;
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const password = document.getElementById('loginPassword').value;
+
+            if (password === CORRECT_PASSWORD) {
+                sessionStorage.setItem('lava_authenticated', 'true');
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('appWrapper').classList.add('visible');
+                document.getElementById('loginError').classList.remove('show');
+            } else {
+                document.getElementById('loginError').classList.add('show');
+                document.getElementById('loginPassword').value = '';
+            }
+        }
+
+        // Check auth on page load
+        checkAuth();
         // State
         let currentInspection = null;
         let photos = [];
