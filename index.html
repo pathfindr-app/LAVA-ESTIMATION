@@ -465,6 +465,83 @@
             padding: 0.5rem;
         }
 
+        /* Inline photo capture for checklist items */
+        .checklist-item {
+            background: var(--lava-light);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .checklist-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .checklist-row {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            margin-top: 0.5rem;
+        }
+
+        .checklist-row .option-group {
+            flex: 1;
+        }
+
+        .checklist-row .mini-photo {
+            width: 60px;
+            height: 60px;
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: white;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checklist-row .mini-photo:hover {
+            border-color: var(--lava-orange);
+        }
+
+        .checklist-row .mini-photo.has-photo {
+            border-style: solid;
+            border-color: var(--success);
+        }
+
+        .checklist-row .mini-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+        }
+
+        .checklist-row .mini-photo svg {
+            width: 24px;
+            height: 24px;
+            fill: #999;
+        }
+
+        .checklist-row .mini-photo input {
+            display: none;
+        }
+
+        /* Conditional field (shows based on selection) */
+        .conditional-field {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed #ddd;
+        }
+
+        .conditional-field.visible {
+            display: block;
+        }
+
         /* Additional Photos */
         .add-photo-btn {
             width: 100%;
@@ -995,7 +1072,7 @@
                     <div class="section-content">
                         <div class="form-group">
                             <label>Roof Type</label>
-                            <select name="roofType">
+                            <select name="roofType" onchange="toggleShingleLayers(this)">
                                 <option value="">Select...</option>
                                 <option value="asphalt-shingle">Asphalt Shingle</option>
                                 <option value="tile">Tile</option>
@@ -1005,6 +1082,13 @@
                                 <option value="wood-shake">Wood Shake</option>
                                 <option value="other">Other</option>
                             </select>
+                            <div class="conditional-field" id="shingleLayersField">
+                                <label>Shingle Layers</label>
+                                <div class="option-group" data-field="shingleLayers">
+                                    <button type="button" class="option-btn" data-value="single">Single Layer</button>
+                                    <button type="button" class="option-btn" data-value="double">Double Layer</button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Estimated Roof Age</label>
@@ -1020,23 +1104,54 @@
                                 <option value="unknown">Unknown</option>
                             </select>
                         </div>
-                        <div class="form-group">
+
+                        <div class="checklist-item">
                             <label>Stories</label>
-                            <div class="option-group" data-field="stories">
-                                <button type="button" class="option-btn" data-value="1">1</button>
-                                <button type="button" class="option-btn" data-value="2">2</button>
-                                <button type="button" class="option-btn" data-value="3+">3+</button>
+                            <div class="checklist-row">
+                                <div class="option-group" data-field="stories">
+                                    <button type="button" class="option-btn" data-value="1">1</button>
+                                    <button type="button" class="option-btn" data-value="2">2</button>
+                                    <button type="button" class="option-btn" data-value="3+">3+</button>
+                                </div>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="storiesPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'storiesPhoto')">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
+
+                        <div class="checklist-item">
                             <label>Pitch</label>
-                            <div class="option-group" data-field="pitch">
-                                <button type="button" class="option-btn" data-value="flat">Flat</button>
-                                <button type="button" class="option-btn" data-value="low">Low (1-3/12)</button>
-                                <button type="button" class="option-btn" data-value="medium">Medium (4-6/12)</button>
-                                <button type="button" class="option-btn" data-value="steep">Steep (7+/12)</button>
+                            <div class="checklist-row">
+                                <div class="option-group" data-field="pitch">
+                                    <button type="button" class="option-btn" data-value="flat">Flat</button>
+                                    <button type="button" class="option-btn" data-value="low">Low</button>
+                                    <button type="button" class="option-btn" data-value="medium">Medium</button>
+                                    <button type="button" class="option-btn" data-value="steep">Steep</button>
+                                </div>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="pitchPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'pitchPhoto')">
+                                </div>
                             </div>
                         </div>
+
+                        <div class="checklist-item">
+                            <label>Access</label>
+                            <div class="checklist-row">
+                                <div class="option-group" data-field="access">
+                                    <button type="button" class="option-btn" data-value="easy">Easy</button>
+                                    <button type="button" class="option-btn" data-value="moderate">Moderate</button>
+                                    <button type="button" class="option-btn" data-value="difficult">Difficult</button>
+                                </div>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="accessPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'accessPhoto')">
+                                </div>
+                            </div>
+                            <input type="text" name="accessNotes" placeholder="Access notes (e.g., ladder placement, obstacles)" style="margin-top: 0.5rem;">
+                        </div>
+
                         <div class="form-group">
                             <label>Overall Condition</label>
                             <div class="option-group" data-field="overallCondition">
@@ -1303,10 +1418,53 @@
 
         // Check auth on page load
         checkAuth();
+
         // State
         let currentInspection = null;
         let photos = [];
+        let miniPhotos = {}; // For checklist item photos
         let additionalPhotoCount = 0;
+
+        // Toggle shingle layers field
+        function toggleShingleLayers(select) {
+            const field = document.getElementById('shingleLayersField');
+            if (select.value === 'asphalt-shingle') {
+                field.classList.add('visible');
+            } else {
+                field.classList.remove('visible');
+            }
+        }
+
+        // Handle mini photo capture for checklist items
+        function handleMiniPhoto(input, fieldName) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                compressImage(e.target.result, function(compressedData) {
+                    const photoBox = input.parentElement;
+                    miniPhotos[fieldName] = compressedData;
+
+                    // Update UI
+                    photoBox.classList.add('has-photo');
+
+                    let img = photoBox.querySelector('img');
+                    if (!img) {
+                        img = document.createElement('img');
+                        photoBox.appendChild(img);
+                    }
+                    img.src = compressedData;
+
+                    // Hide the SVG icon
+                    const svg = photoBox.querySelector('svg');
+                    if (svg) svg.style.display = 'none';
+
+                    autoSave();
+                });
+            };
+            reader.readAsDataURL(file);
+        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -1551,11 +1709,15 @@
                 },
                 roof: {
                     type: form.roofType.value,
+                    shingleLayers: getSelectedOption('shingleLayers'),
                     age: form.roofAge.value,
                     stories: getSelectedOption('stories'),
                     pitch: getSelectedOption('pitch'),
+                    access: getSelectedOption('access'),
+                    accessNotes: form.accessNotes?.value || '',
                     condition: getSelectedOption('overallCondition')
                 },
+                miniPhotos: { ...miniPhotos },
                 findings: {
                     problemAreas: form.problemAreas.value,
                     diagnosis: form.diagnosis.value,
@@ -1673,10 +1835,31 @@
             setSelectedOption('customerUrgency', inspection.concerns?.customerUrgency);
 
             form.roofType.value = inspection.roof?.type || '';
+            toggleShingleLayers(form.roofType);
+            setSelectedOption('shingleLayers', inspection.roof?.shingleLayers);
             form.roofAge.value = inspection.roof?.age || '';
             setSelectedOption('stories', inspection.roof?.stories);
             setSelectedOption('pitch', inspection.roof?.pitch);
+            setSelectedOption('access', inspection.roof?.access);
+            form.accessNotes.value = inspection.roof?.accessNotes || '';
             setSelectedOption('overallCondition', inspection.roof?.condition);
+
+            // Load mini photos
+            miniPhotos = inspection.miniPhotos || {};
+            Object.keys(miniPhotos).forEach(fieldName => {
+                const photoBox = document.querySelector(`.mini-photo[data-field="${fieldName}"]`);
+                if (photoBox && miniPhotos[fieldName]) {
+                    photoBox.classList.add('has-photo');
+                    let img = photoBox.querySelector('img');
+                    if (!img) {
+                        img = document.createElement('img');
+                        photoBox.appendChild(img);
+                    }
+                    img.src = miniPhotos[fieldName];
+                    const svg = photoBox.querySelector('svg');
+                    if (svg) svg.style.display = 'none';
+                }
+            });
 
             form.problemAreas.value = inspection.findings?.problemAreas || '';
             form.diagnosis.value = inspection.findings?.diagnosis || '';
@@ -1793,6 +1976,21 @@
             document.getElementById('additionalPhotos').innerHTML = '';
             additionalPhotoCount = 0;
             updatePhotoCount();
+
+            // Clear mini photos
+            miniPhotos = {};
+            document.querySelectorAll('.mini-photo').forEach(box => {
+                box.classList.remove('has-photo');
+                const img = box.querySelector('img');
+                if (img) img.remove();
+                const svg = box.querySelector('svg');
+                if (svg) svg.style.display = '';
+                const input = box.querySelector('input');
+                if (input) input.value = '';
+            });
+
+            // Hide conditional fields
+            document.getElementById('shingleLayersField').classList.remove('visible');
 
             showView('form');
         }
