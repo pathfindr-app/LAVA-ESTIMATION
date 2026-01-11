@@ -1152,13 +1152,19 @@
                             <input type="text" name="accessNotes" placeholder="Access notes (e.g., ladder placement, obstacles)" style="margin-top: 0.5rem;">
                         </div>
 
-                        <div class="form-group">
+                        <div class="checklist-item">
                             <label>Overall Condition</label>
-                            <div class="option-group" data-field="overallCondition">
-                                <button type="button" class="option-btn good" data-value="good">Good</button>
-                                <button type="button" class="option-btn fair" data-value="fair">Fair</button>
-                                <button type="button" class="option-btn poor" data-value="poor">Poor</button>
-                                <button type="button" class="option-btn critical" data-value="critical">Critical</button>
+                            <div class="checklist-row">
+                                <div class="option-group" data-field="overallCondition">
+                                    <button type="button" class="option-btn good" data-value="good">Good</button>
+                                    <button type="button" class="option-btn fair" data-value="fair">Fair</button>
+                                    <button type="button" class="option-btn poor" data-value="poor">Poor</button>
+                                    <button type="button" class="option-btn critical" data-value="critical">Critical</button>
+                                </div>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="conditionPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'conditionPhoto')">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1176,44 +1182,80 @@
                         </svg>
                     </div>
                     <div class="section-content">
-                        <div class="form-group">
+                        <div class="checklist-item">
                             <label>Problem Areas Identified</label>
-                            <textarea name="problemAreas" placeholder="Describe location and nature of issues found..."></textarea>
+                            <div class="checklist-row">
+                                <textarea name="problemAreas" placeholder="Describe location and nature of issues found..." style="flex: 1;"></textarea>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="problemAreasPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'problemAreasPhoto')">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div class="checklist-item">
                             <label>Diagnosis - What's causing the issue?</label>
-                            <textarea name="diagnosis" placeholder="Root cause analysis..."></textarea>
+                            <div class="checklist-row">
+                                <textarea name="diagnosis" placeholder="Root cause analysis..." style="flex: 1;"></textarea>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="diagnosisPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'diagnosisPhoto')">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
+                        <div class="checklist-item">
                             <label>Gutters / Drainage</label>
-                            <div class="option-group" data-field="gutters">
-                                <button type="button" class="option-btn good" data-value="good">Good</button>
-                                <button type="button" class="option-btn fair" data-value="fair">Fair</button>
-                                <button type="button" class="option-btn poor" data-value="poor">Poor</button>
-                                <button type="button" class="option-btn na" data-value="na">N/A</button>
+                            <div class="checklist-row">
+                                <div class="option-group" data-field="gutters">
+                                    <button type="button" class="option-btn good" data-value="good">Good</button>
+                                    <button type="button" class="option-btn fair" data-value="fair">Fair</button>
+                                    <button type="button" class="option-btn poor" data-value="poor">Poor</button>
+                                    <button type="button" class="option-btn na" data-value="na">N/A</button>
+                                </div>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="guttersPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'guttersPhoto')">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="checklist-item">
                             <label>Flashing Condition</label>
-                            <div class="option-group" data-field="flashing">
-                                <button type="button" class="option-btn good" data-value="good">Good</button>
-                                <button type="button" class="option-btn fair" data-value="fair">Fair</button>
-                                <button type="button" class="option-btn poor" data-value="poor">Poor</button>
-                                <button type="button" class="option-btn na" data-value="na">N/A</button>
+                            <div class="checklist-row">
+                                <div class="option-group" data-field="flashing">
+                                    <button type="button" class="option-btn good" data-value="good">Good</button>
+                                    <button type="button" class="option-btn fair" data-value="fair">Fair</button>
+                                    <button type="button" class="option-btn poor" data-value="poor">Poor</button>
+                                    <button type="button" class="option-btn na" data-value="na">N/A</button>
+                                </div>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="flashingPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'flashingPhoto')">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="checklist-item">
                             <label>Vents / Penetrations</label>
-                            <div class="option-group" data-field="vents">
-                                <button type="button" class="option-btn good" data-value="good">Good</button>
-                                <button type="button" class="option-btn fair" data-value="fair">Fair</button>
-                                <button type="button" class="option-btn poor" data-value="poor">Poor</button>
-                                <button type="button" class="option-btn na" data-value="na">N/A</button>
+                            <div class="checklist-row">
+                                <div class="option-group" data-field="vents">
+                                    <button type="button" class="option-btn good" data-value="good">Good</button>
+                                    <button type="button" class="option-btn fair" data-value="fair">Fair</button>
+                                    <button type="button" class="option-btn poor" data-value="poor">Poor</button>
+                                    <button type="button" class="option-btn na" data-value="na">N/A</button>
+                                </div>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="ventsPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'ventsPhoto')">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="checklist-item">
                             <label>Additional Issues Found</label>
-                            <textarea name="additionalIssues" placeholder="Any other observations..."></textarea>
+                            <div class="checklist-row">
+                                <textarea name="additionalIssues" placeholder="Any other observations..." style="flex: 1;"></textarea>
+                                <div class="mini-photo" onclick="this.querySelector('input').click()" data-field="additionalIssuesPhoto">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                    <input type="file" accept="image/*" onchange="handleMiniPhoto(this, 'additionalIssuesPhoto')">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
